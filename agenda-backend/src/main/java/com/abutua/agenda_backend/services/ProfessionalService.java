@@ -32,6 +32,7 @@ public class ProfessionalService {
         this.areaRepository = areaRepository;
     }
 
+    // GET BY {ID}
     @Transactional(readOnly = true)
     public ProfessionalResponseDTO getById(Integer id) {
         Professional professional = professionalRepository.findById(id)
@@ -40,6 +41,7 @@ public class ProfessionalService {
         return ProfessionalMapper.toProfessionalResponseDTO(professional);
     }
     
+    // GET
     @Transactional(readOnly = true)
     public List<ProfessionalResponseDTO> getAll() {
         return professionalRepository.findAll()
@@ -48,6 +50,7 @@ public class ProfessionalService {
                 .collect(Collectors.toList());
     }
 
+    // POST
     @Transactional
     public ProfessionalResponseDTO save(ProfessionalRequestDTO professionalRequestDTO) {
         Professional professional = ProfessionalMapper.toProfessional(professionalRequestDTO);
@@ -60,6 +63,7 @@ public class ProfessionalService {
         return ProfessionalMapper.toProfessionalResponseDTO(professional);
     }
     
+    // UPDATE BY {ID}
     @Transactional
     public ProfessionalResponseDTO update(Integer id, ProfessionalRequestDTO professionalRequestDTO) {
         try {
@@ -80,6 +84,7 @@ public class ProfessionalService {
         }
     }
 
+    // DELETE BY {ID}
     public void deleteById(Integer id) {
         if (!professionalRepository.existsById(id)) {
             throw new ResourceNotFoundException("Professional not found with id: " + id);

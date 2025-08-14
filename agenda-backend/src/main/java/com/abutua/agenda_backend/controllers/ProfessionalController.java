@@ -5,56 +5,63 @@ import com.abutua.agenda_backend.dtos.ProfessionalResponseDTO;
 import com.abutua.agenda_backend.services.ProfessionalService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
+import java.util.List;
 
 @RestController
-@RequestMapping("profissionais")
-@CrossOrigin
+@RequestMapping("/professionals")
 public class ProfessionalController {
 
+    private final ProfessionalService professionalService;
+
     @Autowired
-    private ProfessionalService profissionalService;
+    public ProfessionalController(ProfessionalService professionalService) {
+        this.professionalService = professionalService;
+    }
 
-    /* Find with filter
+    // GET BY {ID}
+    @GetMapping("/{id}")
+    public ResponseEntity<ProfessionalResponseDTO> getProfessionalById(@PathVariable Integer id) {
+        ProfessionalResponseDTO professional = professionalService.getById(id);
+        return ResponseEntity.ok(professional);
+    }
+
+    // GET
     @GetMapping
-    public ResponseEntity<Page<ProfissionalResponseDTO>> findAll(
-        @RequestParam(name = "nome", defaultValue = "") String nome,
-        @PageableDefault(page = 0, size = 10, sort = "nome") Pageable pageable
-    ) {
-        Page<ProfissionalResponseDTO> profissionais = profissionalService.findAll(nome, pageable);
-        return ResponseEntity.ok(profissionais);
+    public ResponseEntity<List<ProfessionalResponseDTO>> getAllProfessionals() {
+        List<ProfessionalResponseDTO> professionals = professionalService.getAll();
+        return ResponseEntity.ok(professionals);
     }
 
-    // Find by ID
-    @GetMapping("{id}")
-    public ResponseEntity<ProfissionalResponseDTO> findById(@PathVariable Long id) {
-        ProfissionalResponseDTO profissionalDTO = profissionalService.findById(id);
-        return ResponseEntity.ok(profissionalDTO);
-    }
-
-    // Create
+    // POST
     @PostMapping
-    public ResponseEntity<ProfissionalResponseDTO> create(@RequestBody @Valid ProfissionalRequestDTO profissionalRequestDTO) {
-        ProfissionalResponseDTO novoProfissional = profissionalService.create(profissionalRequestDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(novoProfissional);
+    public ResponseEntity<ProfessionalResponseDTO> createProfessional(@Valid @RequestBody ProfessionalRequestDTO professionalRequestDTO) {
+        ProfessionalResponseDTO newProfessional = professionalService.save(professionalRequestDTO);
+        
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(newProfessional.id())
+                .toUri();
+
+        return ResponseEntity.created(location).body(newProfessional);
     }
 
-    /* Update
-    @PutMapping("{id}")
-    public ResponseEntity<ProfissionalResponseDTO> update(@PathVariable Long id, @RequestBody @Valid ProfissionalRequestDTO profissionalRequestDTO) {
-        ProfissionalResponseDTO profissionalAtualizado = profissionalService.update(id, profissionalRequestDTO);
-        return ResponseEntity.ok(profissionalAtualizado);
+    // UPDATE BY {ID}
+    @PutMapping("/{id}")
+    public ResponseEntity<ProfessionalResponseDTO> updateProfessional(@PathVariable Integer id, @Valid @RequestBody ProfessionalRequestDTO professionalRequestDTO) {
+        ProfessionalResponseDTO updatedProfessional = professionalService.update(id, professionalRequestDTO);
+        return ResponseEntity.ok(updatedProfessional);
     }
-
-    // Delete
-    @DeleteMapping("{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        profissionalService.delete(id);
+    
+    // DELETE BY {ID}
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProfessional(@PathVariable Integer id) {
+        professionalService.deleteById(id);
         return ResponseEntity.noContent().build();
-    }*/
+    }
 }
