@@ -1,13 +1,13 @@
 package com.abutua.agenda_backend.services;
 
-import com.abutua.agenda_backend.dtos.ProfissionalRequestDTO;
-import com.abutua.agenda_backend.dtos.ProfissionalResponseDTO;
+import com.abutua.agenda_backend.dtos.ProfessionalRequestDTO;
+import com.abutua.agenda_backend.dtos.ProfessionalResponseDTO;
 import com.abutua.agenda_backend.models.Area;
 import com.abutua.agenda_backend.models.Professional;
 import com.abutua.agenda_backend.repositories.AreaRepository;
-import com.abutua.agenda_backend.repositories.ProfissionalRepository;
+import com.abutua.agenda_backend.repositories.ProfessionalRepository;
 import com.abutua.agenda_backend.services.exceptions.ResourceNotFoundException;
-import com.abutua.agenda_backend.services.mappers.ProfissionalMapper;
+import com.abutua.agenda_backend.services.mappers.ProfessionalMapper;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -21,10 +21,10 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class ProfissionalService {
+public class ProfessionalService {
 
      @Autowired
-    private ProfissionalRepository profissionalRepository;
+    private ProfessionalRepository profissionalRepository;
 
     @Autowired
     private AreaRepository areaRepository;

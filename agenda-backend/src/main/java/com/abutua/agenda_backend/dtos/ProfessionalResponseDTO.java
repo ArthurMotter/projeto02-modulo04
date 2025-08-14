@@ -4,7 +4,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ProfissionalResponseDTO {
+public class ProfessionalResponseDTO {
     private Long id;
     private String nome;
     private String telefone;

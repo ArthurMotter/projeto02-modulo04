@@ -1,12 +1,12 @@
 package com.abutua.agenda_backend.services.mappers;
 
-import com.abutua.agenda_backend.dtos.ProfissionalRequestDTO;
-import com.abutua.agenda_backend.dtos.ProfissionalResponseDTO;
+import com.abutua.agenda_backend.dtos.ProfessionalRequestDTO;
+import com.abutua.agenda_backend.dtos.ProfessionalResponseDTO;
 import com.abutua.agenda_backend.models.Professional;
 
 import java.util.stream.Collectors;
 
-public class ProfissionalMapper {
+public class ProfessionalMapper {
 
     /* Converte de DTO de requisição para Entidade
     public static Professional toEntity(ProfissionalRequestDTO request) {

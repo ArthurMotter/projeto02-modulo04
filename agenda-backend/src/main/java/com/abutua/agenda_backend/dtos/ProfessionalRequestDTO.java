@@ -7,7 +7,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ProfissionalRequestDTO {
+public class ProfessionalRequestDTO {
 
     @NotBlank(message = "O nome não pode ser vazio")
     @Size(min = 3, max = 150, message = "O nome deve ter entre 3 e 150 caracteres")

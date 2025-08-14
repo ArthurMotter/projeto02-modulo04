@@ -1,8 +1,8 @@
 package com.abutua.agenda_backend.controllers;
 
-import com.abutua.agenda_backend.dtos.ProfissionalRequestDTO;
-import com.abutua.agenda_backend.dtos.ProfissionalResponseDTO;
-import com.abutua.agenda_backend.services.ProfissionalService;
+import com.abutua.agenda_backend.dtos.ProfessionalRequestDTO;
+import com.abutua.agenda_backend.dtos.ProfessionalResponseDTO;
+import com.abutua.agenda_backend.services.ProfessionalService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.web.PageableDefault;
@@ -15,10 +15,10 @@ import org.springframework.data.domain.Pageable;
 @RestController
 @RequestMapping("profissionais")
 @CrossOrigin
-public class ProfissionalController {
+public class ProfessionalController {
 
     @Autowired
-    private ProfissionalService profissionalService;
+    private ProfessionalService profissionalService;
 
     /* Find with filter
     @GetMapping

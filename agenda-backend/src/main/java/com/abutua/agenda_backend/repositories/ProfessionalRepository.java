@@ -5,7 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ProfissionalRepository extends JpaRepository<Professional, Long> {
+public interface ProfessionalRepository extends JpaRepository<Professional, Long> {
 
     /**
      * Busca profissionais cujo nome contém a string fornecida, ignorando maiúsculas e minúsculas.
