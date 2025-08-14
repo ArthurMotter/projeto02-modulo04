@@ -1,6 +1,8 @@
 package com.abutua.agenda_backend.services.exceptions;
 
 import jakarta.servlet.http.HttpServletRequest;
+
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -39,6 +41,18 @@ public class ControllerExceptionHandler {
             err.addError(f.getField(), f.getDefaultMessage());
         }
 
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<StandardError> dataIntegrity(DataIntegrityViolationException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.CONFLICT;
+        StandardError err = new StandardError();
+        err.setTimestamp(Instant.now());
+        err.setStatus(status.value());
+        err.setError("Data integrity violation");
+        err.setMessage("The request could not be completed due to a conflict with the current state of the resource. A resource with the same unique identifier (e.g., email) may already exist.");
+        err.setPath(request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }
 }
