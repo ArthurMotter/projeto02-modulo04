@@ -20,7 +20,7 @@ public class ProfissionalController {
     @Autowired
     private ProfissionalService profissionalService;
 
-    // Find with filter
+    /* Find with filter
     @GetMapping
     public ResponseEntity<Page<ProfissionalResponseDTO>> findAll(
         @RequestParam(name = "nome", defaultValue = "") String nome,
@@ -44,12 +44,12 @@ public class ProfissionalController {
         return ResponseEntity.status(HttpStatus.CREATED).body(novoProfissional);
     }
 
-    // Update
+    /* Update
     @PutMapping("{id}")
     public ResponseEntity<ProfissionalResponseDTO> update(@PathVariable Long id, @RequestBody @Valid ProfissionalRequestDTO profissionalRequestDTO) {
         ProfissionalResponseDTO profissionalAtualizado = profissionalService.update(id, profissionalRequestDTO);
         return ResponseEntity.ok(profissionalAtualizado);
-    }
+    }*/
 
     // Delete
     @DeleteMapping("{id}")

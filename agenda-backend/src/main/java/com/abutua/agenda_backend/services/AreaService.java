@@ -16,7 +16,7 @@ public class AreaService {
     @Autowired
     private AreaRepository areaRepository;
 
-    // Area to AreaDTO Converter
+    /*  Area to AreaDTO Converter
     private AreaDTO toDTO(Area area) {
         AreaDTO areaDTO = new AreaDTO();
         areaDTO.setId(area.getId());
@@ -31,5 +31,5 @@ public class AreaService {
         return areas.stream()
                     .map(this::toDTO)
                     .collect(Collectors.toList());
-    }
+    }*/
 }

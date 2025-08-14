@@ -3,7 +3,7 @@ package com.abutua.agenda_backend.services;
 import com.abutua.agenda_backend.dtos.ProfissionalRequestDTO;
 import com.abutua.agenda_backend.dtos.ProfissionalResponseDTO;
 import com.abutua.agenda_backend.models.Area;
-import com.abutua.agenda_backend.models.Profissional;
+import com.abutua.agenda_backend.models.Professional;
 import com.abutua.agenda_backend.repositories.AreaRepository;
 import com.abutua.agenda_backend.repositories.ProfissionalRepository;
 import com.abutua.agenda_backend.services.exceptions.ResourceNotFoundException;
@@ -29,10 +29,10 @@ public class ProfissionalService {
     @Autowired
     private AreaRepository areaRepository;
 
-    // Fetch (with filters)
+    /* Fetch (with filters)
     @Transactional(readOnly = true)
     public Page<ProfissionalResponseDTO> findAll(String nome, Pageable pageable) {
-        Page<Profissional> pageProfissional;
+        Page<Professional> pageProfissional;
 
         if (nome != null && !nome.isBlank()) {
             pageProfissional = profissionalRepository.findByNomeContainingIgnoreCase(nome, pageable);
@@ -47,7 +47,7 @@ public class ProfissionalService {
     @Transactional
     public ProfissionalResponseDTO create(ProfissionalRequestDTO profissionalRequestDTO) {
         
-        Profissional profissional = ProfissionalMapper.toEntity(profissionalRequestDTO);
+        Professional profissional = ProfissionalMapper.toEntity(profissionalRequestDTO);
         
         List<Area> areas = areaRepository.findAllById(profissionalRequestDTO.getAreaIds());
         profissional.setAreas(Set.copyOf(areas));
@@ -58,16 +58,16 @@ public class ProfissionalService {
 
     @Transactional(readOnly = true)
     public ProfissionalResponseDTO findById(Long id) {
-        Profissional profissional = profissionalRepository.findById(id)
+        Professional profissional = profissionalRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Profissional não encontrado com o id: " + id));
         return ProfissionalMapper.toResponseDTO(profissional);
     }
     
-    // Edit
+    /* Edit
     @Transactional
     public ProfissionalResponseDTO update(Long id, ProfissionalRequestDTO profissionalRequestDTO) {
         try {
-            Profissional profissional = profissionalRepository.getReferenceById(id);
+            Professional profissional = profissionalRepository.getReferenceById(id);
 
             profissional.setNome(profissionalRequestDTO.getNome());
             profissional.setTelefone(profissionalRequestDTO.getTelefone());
@@ -84,7 +84,7 @@ public class ProfissionalService {
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException("Profissional não encontrado com o id: " + id);
         }
-    }
+    }*/
 
     // Delete
     public void delete(Long id) {

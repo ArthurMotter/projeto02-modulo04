@@ -6,8 +6,8 @@ import com.abutua.agenda_backend.models.Area;
 public class AreaMapper {
     public static AreaDTO toDTO(Area area) {
         AreaDTO dto = new AreaDTO();
-        dto.setId(area.getId());
-        dto.setNome(area.getNome());
+        //dto.setId(area.getId());
+        //dto.setNome(area.getNome());
         return dto;
     }
 }

@@ -2,42 +2,43 @@ package com.abutua.agenda_backend.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Builder.Default;
+import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Data
+@Table(name = "professionals")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class Profissional {
+public class Professional {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(nullable = false, length = 150)
-    private String nome;
+    private String name;
 
-    @Column(length = 20)
-    private String telefone;
-
-    @Column(length = 100)
+    @Column(nullable = false, unique = true, length = 150)
     private String email;
 
+    @Column(length = 20)
+    private String phone;
+
     @Column(nullable = false)
-    @Default
-    private Boolean ativo = true;
+    private boolean active = true;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-        name = "profissional_area",
-        joinColumns = @JoinColumn(name = "profissional_id"),
+        name = "professional_areas",
+        joinColumns = @JoinColumn(name = "professional_id"),
         inverseJoinColumns = @JoinColumn(name = "area_id")
     )
-    private Set<Area> areas;
+    private Set<Area> areas = new HashSet<>();
+
 }

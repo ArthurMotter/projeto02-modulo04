@@ -1,11 +1,11 @@
 package com.abutua.agenda_backend.repositories;
 
-import com.abutua.agenda_backend.models.Profissional;
+import com.abutua.agenda_backend.models.Professional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ProfissionalRepository extends JpaRepository<Profissional, Long> {
+public interface ProfissionalRepository extends JpaRepository<Professional, Long> {
 
     /**
      * Busca profissionais cujo nome contém a string fornecida, ignorando maiúsculas e minúsculas.
@@ -15,6 +15,6 @@ public interface ProfissionalRepository extends JpaRepository<Profissional, Long
      * @param pageable Objeto contendo as informações de paginação (página, tamanho, ordenação).
      * @return Uma página (Page) de profissionais que correspondem ao critério.
      */
-    Page<Profissional> findByNomeContainingIgnoreCase(String nome, Pageable pageable);
+    Page<Professional> findByNomeContainingIgnoreCase(String nome, Pageable pageable);
 
 }

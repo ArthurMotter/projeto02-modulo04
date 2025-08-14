@@ -2,15 +2,15 @@ package com.abutua.agenda_backend.services.mappers;
 
 import com.abutua.agenda_backend.dtos.ProfissionalRequestDTO;
 import com.abutua.agenda_backend.dtos.ProfissionalResponseDTO;
-import com.abutua.agenda_backend.models.Profissional;
+import com.abutua.agenda_backend.models.Professional;
 
 import java.util.stream.Collectors;
 
 public class ProfissionalMapper {
 
-    // Converte de DTO de requisição para Entidade
-    public static Profissional toEntity(ProfissionalRequestDTO request) {
-        return Profissional.builder()
+    /* Converte de DTO de requisição para Entidade
+    public static Professional toEntity(ProfissionalRequestDTO request) {
+        return Professional.builder()
                 .nome(request.getNome())
                 .telefone(request.getTelefone())
                 .email(request.getEmail())
@@ -19,7 +19,7 @@ public class ProfissionalMapper {
     }
 
     // Converte de Entidade para DTO de resposta
-    public static ProfissionalResponseDTO toResponseDTO(Profissional profissional) {
+    public static ProfissionalResponseDTO toResponseDTO(Professional profissional) {
         ProfissionalResponseDTO response = new ProfissionalResponseDTO();
         response.setId(profissional.getId());
         response.setNome(profissional.getNome());
@@ -37,5 +37,5 @@ public class ProfissionalMapper {
         }
         
         return response;
-    }
+    }*/
 }

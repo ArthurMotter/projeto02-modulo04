@@ -18,10 +18,11 @@ public class AreaController {
 
     @Autowired
     private AreaService areaService;
-
+    /* 
     @GetMapping
     public ResponseEntity<List<AreaDTO>> findAll() {
         List<AreaDTO> areas = areaService.findAll();
         return ResponseEntity.ok(areas);
     }
+        */
 }
