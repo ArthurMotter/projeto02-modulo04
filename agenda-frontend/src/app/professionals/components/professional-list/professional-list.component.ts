@@ -1,29 +1,29 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Profissional } from '../../models/profissional.model';
-import { Page, ProfissionalService } from '../../services/profissional.service';
+import { Professional } from '../../models/professional.model';
+import { Page, ProfessionalService } from '../../services/professional.service';
 import { Area } from '../../models/area.model';
 import { ModalComponent } from '../../../layout/modal/modal.component';
 import { ToastService } from '../../../shared/toast.service';
-import { ProfissionalFormComponent } from '../profissional-form/profissional-form.component';
+import { ProfessionalFormComponent } from '../professional-form/professional-form.component';
 
 @Component({
-  selector: 'app-profissional-list',
+  selector: 'app-professional-list',
   standalone: false,
-  templateUrl: './profissional-list.component.html',
-  styleUrls: ['./profissional-list.component.css']
+  templateUrl: './Professional-list.component.html',
+  styleUrls: ['./Professional-list.component.css']
 })
-export class ProfissionalListComponent implements OnInit {
+export class ProfessionalListComponent implements OnInit {
 
   @ViewChild('formModal') formModal!: ModalComponent;
   @ViewChild('deleteConfirmationModal') deleteConfirmationModal!: ModalComponent;
-  @ViewChild(ProfissionalFormComponent) formComponent!: ProfissionalFormComponent;
+  @ViewChild(ProfessionalFormComponent) formComponent!: ProfessionalFormComponent;
 
-  expandedProfissionalId: number | null = null;
-  profissionalToEdit?: Profissional;
-  profissionalToDelete?: Profissional;
+  expandedProfessionalId: number | null = null;
+  professionalToEdit?: Professional;
+  professionalToDelete?: Professional;
   modalTitle = '';
 
-  page: Page<Profissional> | undefined;
+  page: Page<Professional> | undefined;
   currentPage = 0;
   pageSize = 10;
   filterName = '';
@@ -31,18 +31,18 @@ export class ProfissionalListComponent implements OnInit {
   isLoading = true;
 
   constructor(
-    private profissionalService: ProfissionalService,
+    private professionalService: ProfessionalService,
     private toastService: ToastService
   ) { }
 
   // Methods
   ngOnInit(): void {
-    this.loadProfissionais();
+    this.loadProfessionals();
   }
 
-  loadProfissionais(): void {
+  loadProfessionals(): void {
     this.isLoading = true;
-    this.profissionalService.getProfissionais(this.currentPage, this.pageSize, this.filterName)
+    this.professionalService.getProfissionais(this.currentPage, this.pageSize, this.filterName)
       .subscribe({
         next: (data) => {
           this.page = data;
@@ -57,48 +57,48 @@ export class ProfissionalListComponent implements OnInit {
 
   openModalForNew(): void {
     this.modalTitle = 'Novo Profissional';
-    this.profissionalToEdit = undefined;
+    this.professionalToEdit = undefined;
 
     this.formComponent.resetForm();
 
     this.formModal.open();
   }
 
-  openModalForEdit(profissional: Profissional): void {
+  openModalForEdit(Professional: Professional): void {
     this.modalTitle = 'Editar Profissional';
-    this.profissionalToEdit = profissional;
+    this.professionalToEdit = Professional;
     this.formModal.open();
   }
 
-  openDeleteConfirmation(profissional: Profissional): void {
-    this.profissionalToDelete = profissional;
+  openDeleteConfirmation(Professional: Professional): void {
+    this.professionalToDelete = Professional;
     this.deleteConfirmationModal.open();
   }
 
   toggleDetails(id: number): void {
-    if (this.expandedProfissionalId === id) {
-      this.expandedProfissionalId = null;
+    if (this.expandedProfessionalId === id) {
+      this.expandedProfessionalId = null;
     } else {
-      this.expandedProfissionalId = id;
+      this.expandedProfessionalId = id;
     }
   }
 
   // Handlers
   handleSave(): void {
     this.formModal.close();
-    this.loadProfissionais();
+    this.loadProfessionals();
   }
 
   confirmDelete(): void {
-    if (this.profissionalToDelete) {
-      this.profissionalService.delete(this.profissionalToDelete.id).subscribe({
+    if (this.professionalToDelete) {
+      this.professionalService.delete(this.professionalToDelete.id).subscribe({
         next: () => {
           this.toastService.showSuccess('Profissional excluído com sucesso!');
-          this.loadProfissionais();
+          this.loadProfessionals();
           this.deleteConfirmationModal.close();
         },
         error: (err) => {
-          this.toastService.showError('Erro ao excluir profissional.');
+          this.toastService.showError('Erro ao excluir Profissional.');
           console.error("Error deleting professional:", err);
           this.deleteConfirmationModal.close();
         }
@@ -108,12 +108,12 @@ export class ProfissionalListComponent implements OnInit {
 
   onFilter(): void {
     this.currentPage = 0;
-    this.loadProfissionais();
+    this.loadProfessionals();
   }
 
   onPageChange(pageNumber: number): void {
     this.currentPage = pageNumber;
-    this.loadProfissionais();
+    this.loadProfessionals();
   }
 
   // Helpers
@@ -128,7 +128,7 @@ export class ProfissionalListComponent implements OnInit {
     if (!areas || areas.length === 0) {
       return 'N/A';
     }
-    return areas.map(area => area.nome).join(', ');
+    return areas.map(area => area.name).join(', ');
   }
 
 }

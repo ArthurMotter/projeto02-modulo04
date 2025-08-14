@@ -2,16 +2,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
 
-import { ProfissionaisRoutingModule } from './profissionais-routing.module';
-import { ProfissionalListComponent } from './components/profissional-list/profissional-list.component';
-import { ProfissionalFormComponent } from './components/profissional-form/profissional-form.component';
+import { ProfissionaisRoutingModule } from './professionals-routing.module';
 import { ModalComponent } from '../layout/modal/modal.component';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+import { ProfessionalFormComponent } from './components/professional-form/professional-form.component';
+import { ProfessionalListComponent } from './components/professional-list/professional-list.component';
 
 @NgModule({
   declarations: [
-    ProfissionalListComponent,
-    ProfissionalFormComponent
+    ProfessionalFormComponent,
+    ProfessionalListComponent
   ],
   imports: [
     CommonModule,
@@ -23,4 +23,4 @@ import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
     NgxMaskPipe       
   ]
 })
-export class ProfissionaisModule { }
+export class ProfessionalsModule { }

@@ -37,35 +37,35 @@
                 </tr>
             </thead>
             <tbody>
-                <ng-container *ngFor="let profissional of page.content">
+                <ng-container *ngFor="let professional of page.content">
                     <!-- MAIN ROW -->
                     <tr class="text-nowrap">
-                        <th scope="row">{{ profissional.id }}</th>
-                        <td>{{ profissional.nome }}</td>
-                        <td class="d-none d-md-table-cell">{{ profissional.email || 'N/A' }}</td>
-                        <td class="d-none d-md-table-cell">{{ getAreaNames(profissional.areas) }}</td>
+                        <th scope="row">{{ professional.id }}</th>
+                        <td>{{ professional.name }}</td>
+                        <td class="d-none d-md-table-cell">{{ professional.email || 'N/A' }}</td>
+                        <td class="d-none d-md-table-cell">{{ getAreaNames(professional.areas) }}</td>
                         <td>
-                            <span *ngIf="profissional.ativo" class="badge bg-success">Sim</span>
-                            <span *ngIf="!profissional.ativo" class="badge bg-danger">Não</span>
+                            <span *ngIf="professional.active" class="badge bg-success">Sim</span>
+                            <span *ngIf="!professional.active" class="badge bg-danger">Não</span>
                         </td>
                         <td>
                             <button class="btn btn-sm btn-info me-2 d-md-none" type="button"
-                                (click)="toggleDetails(profissional.id)">
+                                (click)="toggleDetails(professional.id)">
                                 <i class="bi bi-three-dots"></i>
                             </button>
                             <button class="btn btn-sm btn-primary me-2"
-                                (click)="openModalForEdit(profissional)">Editar</button>
+                                (click)="openModalForEdit(professional)">Editar</button>
                             <button class="btn btn-sm btn-danger"
-                                (click)="openDeleteConfirmation(profissional)">Excluir</button>
+                                (click)="openDeleteConfirmation(professional)">Excluir</button>
                         </td>
                     </tr>
                     <!-- EXPANDABLE DETAILS ROW -->
                     <tr class="d-md-none"> 
                         <td colspan="4" class="p-0">
-                            <div [class.show]="expandedProfissionalId === profissional.id"
+                            <div [class.show]="expandedProfessionalId === professional.id"
                                 class="collapse p-3 bg-light">
-                                <strong>Email:</strong> {{ profissional.email || 'N/A' }} <br>
-                                <strong>Áreas:</strong> {{ getAreaNames(profissional.areas) }}
+                                <strong>Email:</strong> {{ professional.email || 'N/A' }} <br>
+                                <strong>Áreas:</strong> {{ getAreaNames(professional.areas) }}
                             </div>
                         </td>
                     </tr>
@@ -99,13 +99,13 @@
 
 <!-- CREATE/EDIT Modal -->
 <app-modal #formModal [id]="'modalProfissional'" [title]="modalTitle">
-    <app-profissional-form [profissional]="profissionalToEdit" (onSave)="handleSave()"></app-profissional-form>
+    <app-professional-form [professional]="professionalToEdit" (onSave)="handleSave()"></app-professional-form>
 </app-modal>
 
 <!-- DELETE CONFIRMATION Modal -->
 <app-modal #deleteConfirmationModal [id]="'modalDeleteConfirmation'" [title]="'Confirmar Exclusão'">
-    <div *ngIf="profissionalToDelete">
-        <p>Você tem certeza que deseja excluir o profissional <strong>{{ profissionalToDelete.nome }}</strong>?</p>
+    <div *ngIf="professionalToDelete">
+        <p>Você tem certeza que deseja excluir o profissional <strong>{{ professionalToDelete.name }}</strong>?</p>
         <p>Esta ação não pode ser desfeita.</p>
     </div>
     <div class="d-flex justify-content-end">

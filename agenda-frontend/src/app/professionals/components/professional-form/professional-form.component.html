@@ -1,14 +1,14 @@
 <form [formGroup]="form" (ngSubmit)="save()">
-    <!-- Nome -->
+    <!-- Name -->
     <div class="mb-3">
-        <label for="nome" class="form-label">Nome</label>
-        <input type="text" class="form-control" id="nome" formControlName="nome"
-            [class.is-invalid]="nome?.invalid && (nome?.dirty || nome?.touched)">
+        <label for="name" class="form-label">Nome</label>
+        <input type="text" class="form-control" id="name" formControlName="name"
+            [class.is-invalid]="name?.invalid && (name?.dirty || name?.touched)">
         <!-- Error Messages -->
-        <div *ngIf="nome?.invalid && (nome?.dirty || nome?.touched)" class="invalid-feedback">
-            <div *ngIf="nome?.errors?.['required']">Nome é obrigatório.</div>
-            <div *ngIf="nome?.errors?.['minlength']">Nome deve ter no mínimo 3 caracteres.</div>
-            <div *ngIf="nome?.errors?.['maxlength']">Nome não pode exceder 150 caracteres.</div>
+        <div *ngIf="name?.invalid && (name?.dirty || name?.touched)" class="invalid-feedback">
+            <div *ngIf="name?.errors?.['required']">Nome é obrigatório.</div>
+            <div *ngIf="name?.errors?.['minlength']">Nome deve ter no mínimo 3 caracteres.</div>
+            <div *ngIf="name?.errors?.['maxlength']">Nome não pode exceder 150 caracteres.</div>
         </div>
     </div>
 
@@ -23,18 +23,18 @@
         </div>
     </div>
 
-    <!-- Telefone -->
+    <!-- Phone -->
     <div class="mb-3">
-        <label for="telefone" class="form-label">Telefone</label>
-        <input type="text" class="form-control" id="telefone" formControlName="telefone" mask="(00) 00000-0000">
+        <label for="phone" class="form-label">Telefone</label>
+        <input type="text" class="form-control" id="phone" formControlName="phone" mask="(00) 00000-0000">
     </div>
 
-    <!-- Áreas -->
+    <!-- Areas -->
     <div class="mb-3">
-        <label for="areas" class="form-label">Áreas de Atuação</label>
-        <select id="areas" class="form-select" multiple formControlName="areaIds"
+        <label for="areaIds" class="form-label">Áreas de Atuação</label>
+        <select id="areaIds" class="form-select" multiple formControlName="areaIds"
             [class.is-invalid]="areaIds?.invalid && (areaIds?.dirty || areaIds?.touched)">
-            <option *ngFor="let area of areas$ | async" [value]="area.id">{{ area.nome }}</option>
+            <option *ngFor="let area of areas$ | async" [value]="area.id">{{ area.name }}</option>
         </select>
         <!-- Error Messages -->
         <div *ngIf="areaIds?.invalid && (areaIds?.dirty || areaIds?.touched)" class="invalid-feedback">
@@ -42,10 +42,10 @@
         </div>
     </div>
 
-    <!-- Ativo Checkbox -->
+    <!-- Active -->
     <div class="form-check mb-3">
-        <input class="form-check-input" type="checkbox" id="ativo" formControlName="ativo">
-        <label class="form-check-label" for="ativo">Ativo</label>
+        <input class="form-check-input" type="checkbox" id="active" formControlName="active">
+        <label class="form-check-label" for="active">Ativo</label>
     </div>
 
     <div class="d-flex justify-content-end">

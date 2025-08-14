@@ -16,6 +16,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/professionals")
+@CrossOrigin
 public class ProfessionalController {
 
     private final ProfessionalService professionalService;

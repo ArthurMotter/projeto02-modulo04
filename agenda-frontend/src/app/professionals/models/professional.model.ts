@@ -1,10 +1,10 @@
 import { Area } from "./area.model";
 
-export interface Profissional {
+export interface Professional {
   id: number;
-  nome: string;
-  telefone: string;
+  name: string;
+  phone: string;
   email: string;
-  ativo: boolean;
+  active: boolean;
   areas: Area[];
 }
