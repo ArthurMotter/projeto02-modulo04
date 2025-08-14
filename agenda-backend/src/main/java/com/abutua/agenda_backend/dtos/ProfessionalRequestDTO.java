@@ -1,25 +1,25 @@
 package com.abutua.agenda_backend.dtos;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
 import java.util.List;
 
-@Data
-public class ProfessionalRequestDTO {
-
+public record ProfessionalRequestDTO(
     @NotBlank(message = "O nome não pode ser vazio")
     @Size(min = 3, max = 150, message = "O nome deve ter entre 3 e 150 caracteres")
-    private String nome;
+    String name,
 
-    private String telefone;
+    @NotBlank(message = "O Email não pode ser vazio")
+    @Email(message = "Formato de email inválido")
+    String email,
 
-    private String email;
+    String phone,
 
     @NotNull(message = "O campo 'ativo' é obrigatório")
-    private Boolean ativo;
-    
+    Boolean active,
+
     @NotNull(message = "A lista de áreas não pode ser nula")
-    private List<Long> areaIds;
-}
+    List<Integer> areaIds
+) {}
