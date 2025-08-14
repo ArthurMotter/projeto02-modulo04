@@ -2,6 +2,7 @@ package com.abutua.agenda_backend.services;
 
 import com.abutua.agenda_backend.dtos.ProfessionalRequestDTO;
 import com.abutua.agenda_backend.dtos.ProfessionalResponseDTO;
+
 import com.abutua.agenda_backend.models.Area;
 import com.abutua.agenda_backend.models.Professional;
 import com.abutua.agenda_backend.repositories.AreaRepository;
@@ -10,87 +11,79 @@ import com.abutua.agenda_backend.services.exceptions.ResourceNotFoundException;
 import com.abutua.agenda_backend.services.mappers.ProfessionalMapper;
 
 import jakarta.persistence.EntityNotFoundException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ProfessionalService {
 
-     @Autowired
-    private ProfessionalRepository profissionalRepository;
+    private final ProfessionalRepository professionalRepository;
+    private final AreaRepository areaRepository;
 
     @Autowired
-    private AreaRepository areaRepository;
-
-    /* Fetch (with filters)
-    @Transactional(readOnly = true)
-    public Page<ProfissionalResponseDTO> findAll(String nome, Pageable pageable) {
-        Page<Professional> pageProfissional;
-
-        if (nome != null && !nome.isBlank()) {
-            pageProfissional = profissionalRepository.findByNomeContainingIgnoreCase(nome, pageable);
-        } else {
-            pageProfissional = profissionalRepository.findAll(pageable);
-        }
-        
-        return pageProfissional.map(ProfissionalMapper::toResponseDTO);
-    }
-
-    // Create
-    @Transactional
-    public ProfissionalResponseDTO create(ProfissionalRequestDTO profissionalRequestDTO) {
-        
-        Professional profissional = ProfissionalMapper.toEntity(profissionalRequestDTO);
-        
-        List<Area> areas = areaRepository.findAllById(profissionalRequestDTO.getAreaIds());
-        profissional.setAreas(Set.copyOf(areas));
-        profissional = profissionalRepository.save(profissional);
-
-        return ProfissionalMapper.toResponseDTO(profissional);
+    public ProfessionalService(ProfessionalRepository professionalRepository, AreaRepository areaRepository) {
+        this.professionalRepository = professionalRepository;
+        this.areaRepository = areaRepository;
     }
 
     @Transactional(readOnly = true)
-    public ProfissionalResponseDTO findById(Long id) {
-        Professional profissional = profissionalRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Profissional não encontrado com o id: " + id));
-        return ProfissionalMapper.toResponseDTO(profissional);
+    public ProfessionalResponseDTO getById(Integer id) {
+        Professional professional = professionalRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Professional not found with id: " + id));
+
+        return ProfessionalMapper.toProfessionalResponseDTO(professional);
     }
     
-    /* Edit
+    @Transactional(readOnly = true)
+    public List<ProfessionalResponseDTO> getAll() {
+        return professionalRepository.findAll()
+                .stream()
+                .map(ProfessionalMapper::toProfessionalResponseDTO)
+                .collect(Collectors.toList());
+    }
+
     @Transactional
-    public ProfissionalResponseDTO update(Long id, ProfissionalRequestDTO profissionalRequestDTO) {
+    public ProfessionalResponseDTO save(ProfessionalRequestDTO professionalRequestDTO) {
+        Professional professional = ProfessionalMapper.toProfessional(professionalRequestDTO);
+        
+        Set<Area> areas = new HashSet<>(areaRepository.findAllById(professionalRequestDTO.areaIds()));
+        professional.setAreas(areas);
+
+        professional = professionalRepository.save(professional);
+
+        return ProfessionalMapper.toProfessionalResponseDTO(professional);
+    }
+    
+    @Transactional
+    public ProfessionalResponseDTO update(Integer id, ProfessionalRequestDTO professionalRequestDTO) {
         try {
-            Professional profissional = profissionalRepository.getReferenceById(id);
+            Professional professional = professionalRepository.getReferenceById(id);
 
-            profissional.setNome(profissionalRequestDTO.getNome());
-            profissional.setTelefone(profissionalRequestDTO.getTelefone());
-            profissional.setEmail(profissionalRequestDTO.getEmail());
-            profissional.setAtivo(profissionalRequestDTO.getAtivo());
+            ProfessionalMapper.updateProfessionalFromDTO(professionalRequestDTO, professional);
 
-            profissional.getAreas().clear();
-            List<Area> areas = areaRepository.findAllById(profissionalRequestDTO.getAreaIds());
-            profissional.getAreas().addAll(areas);
+            professional.getAreas().clear();
+            Set<Area> areas = new HashSet<>(areaRepository.findAllById(professionalRequestDTO.areaIds()));
+            professional.setAreas(areas);
+            
+            professional = professionalRepository.save(professional);
 
-            profissional = profissionalRepository.save(profissional);
+            return ProfessionalMapper.toProfessionalResponseDTO(professional);
 
-            return ProfissionalMapper.toResponseDTO(profissional);
         } catch (EntityNotFoundException e) {
-            throw new ResourceNotFoundException("Profissional não encontrado com o id: " + id);
+            throw new ResourceNotFoundException("Professional not found with id: " + id);
         }
     }
 
-    // Delete
-    public void delete(Long id) {
-        if (!profissionalRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Profissional não encontrado com o id: " + id);
+    public void deleteById(Integer id) {
+        if (!professionalRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Professional not found with id: " + id);
         }
-        profissionalRepository.deleteById(id);
-    }*/
+        professionalRepository.deleteById(id);
+    }
 }
