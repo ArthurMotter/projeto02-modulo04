@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping("/professionals")
@@ -40,13 +39,6 @@ public class ProfessionalController {
     public ResponseEntity<ProfessionalResponseDTO> getProfessionalById(@PathVariable Integer id) {
         ProfessionalResponseDTO professional = professionalService.getById(id);
         return ResponseEntity.ok(professional);
-    }
-
-    // GET
-    @GetMapping
-    public ResponseEntity<List<ProfessionalResponseDTO>> getAllProfessionals() {
-        List<ProfessionalResponseDTO> professionals = professionalService.getAll();
-        return ResponseEntity.ok(professionals);
     }
 
     // POST

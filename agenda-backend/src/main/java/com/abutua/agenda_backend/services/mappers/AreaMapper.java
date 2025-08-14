@@ -4,10 +4,12 @@ import com.abutua.agenda_backend.dtos.AreaDTO;
 import com.abutua.agenda_backend.models.Area;
 
 public class AreaMapper {
+    
+    // Record's constructor
     public static AreaDTO toDTO(Area area) {
-        AreaDTO dto = new AreaDTO();
-        //dto.setId(area.getId());
-        //dto.setNome(area.getNome());
-        return dto;
+        return new AreaDTO(
+            area.getId(),
+            area.getName()
+        );
     }
 }
