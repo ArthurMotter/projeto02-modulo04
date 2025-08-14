@@ -84,7 +84,7 @@ public class ProfessionalService {
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException("Profissional não encontrado com o id: " + id);
         }
-    }*/
+    }
 
     // Delete
     public void delete(Long id) {
@@ -92,5 +92,5 @@ public class ProfessionalService {
             throw new ResourceNotFoundException("Profissional não encontrado com o id: " + id);
         }
         profissionalRepository.deleteById(id);
-    }
+    }*/
 }

@@ -49,12 +49,12 @@ public class ProfessionalController {
     public ResponseEntity<ProfissionalResponseDTO> update(@PathVariable Long id, @RequestBody @Valid ProfissionalRequestDTO profissionalRequestDTO) {
         ProfissionalResponseDTO profissionalAtualizado = profissionalService.update(id, profissionalRequestDTO);
         return ResponseEntity.ok(profissionalAtualizado);
-    }*/
+    }
 
     // Delete
     @DeleteMapping("{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         profissionalService.delete(id);
         return ResponseEntity.noContent().build();
-    }
+    }*/
 }
