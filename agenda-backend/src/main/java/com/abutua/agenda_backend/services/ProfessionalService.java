@@ -11,7 +11,9 @@ import com.abutua.agenda_backend.services.exceptions.ResourceNotFoundException;
 import com.abutua.agenda_backend.services.mappers.ProfessionalMapper;
 
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,10 +28,23 @@ public class ProfessionalService {
     private final ProfessionalRepository professionalRepository;
     private final AreaRepository areaRepository;
 
-    @Autowired
     public ProfessionalService(ProfessionalRepository professionalRepository, AreaRepository areaRepository) {
         this.professionalRepository = professionalRepository;
         this.areaRepository = areaRepository;
+    }
+
+    // GET BY {name}
+    @Transactional(readOnly = true)
+    public Page<ProfessionalResponseDTO> getAll(String name, Pageable pageable) {
+        Page<Professional> professionalsPage;
+
+        if (name != null && !name.isBlank()) {
+            professionalsPage = professionalRepository.findByNameContainingIgnoreCase(name, pageable);
+        } else {
+            professionalsPage = professionalRepository.findAll(pageable);
+        }
+
+        return professionalsPage.map(ProfessionalMapper::toProfessionalResponseDTO);
     }
 
     // GET BY {ID}

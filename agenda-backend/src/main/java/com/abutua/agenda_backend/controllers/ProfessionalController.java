@@ -4,7 +4,10 @@ import com.abutua.agenda_backend.dtos.ProfessionalRequestDTO;
 import com.abutua.agenda_backend.dtos.ProfessionalResponseDTO;
 import com.abutua.agenda_backend.services.ProfessionalService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -18,9 +21,18 @@ public class ProfessionalController {
 
     private final ProfessionalService professionalService;
 
-    @Autowired
     public ProfessionalController(ProfessionalService professionalService) {
         this.professionalService = professionalService;
+    }
+
+    // GET BY {name}
+    @GetMapping
+    public ResponseEntity<Page<ProfessionalResponseDTO>> getAllProfessionals(
+            @RequestParam(defaultValue = "") String name,
+            @PageableDefault(page = 0, size = 10, sort = "name") Pageable pageable) {
+
+        Page<ProfessionalResponseDTO> professionals = professionalService.getAll(name, pageable);
+        return ResponseEntity.ok(professionals);
     }
 
     // GET BY {ID}
